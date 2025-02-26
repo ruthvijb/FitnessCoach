@@ -1,0 +1,64 @@
+def calculate_bmi(weight, height):
+    """
+    Calculate BMI based on weight (kg) and height (m)
+    """
+    bmi = weight / (height ** 2)
+    return round(bmi, 2)
+
+def diet_recommendation(weight, height, goal):
+    """
+    Provides a diet recommendation based on BMI and fitness goal.
+    
+    :param weight: Weight in kg
+    :param height: Height in meters
+    :param goal: Desired goal ("weight_loss", "maintenance", "muscle_gain")
+    :return: Recommended diet plan
+    """
+    bmi = calculate_bmi(weight, height)
+    
+    if bmi < 18.5:
+        status = "Underweight"
+    elif 18.5 <= bmi < 24.9:
+        status = "Normal weight"
+    elif 25 <= bmi < 29.9:
+        status = "Overweight"
+    else:
+        status = "Obese"
+
+    diet_plan = {
+        "weight_loss": {
+            "calories": "1500-1800 kcal/day",
+            "protein": "High protein (1.2-1.5g per kg body weight)",
+            "carbs": "Low to moderate (complex carbs like whole grains)",
+            "fats": "Healthy fats (avocado, nuts, olive oil)",
+            "suggested_foods": ["Lean meats, fish, eggs, vegetables, nuts, legumes"]
+        },
+        "maintenance": {
+            "calories": "2000-2500 kcal/day",
+            "protein": "Moderate protein (1g per kg body weight)",
+            "carbs": "Balanced intake (whole grains, fruits, veggies)",
+            "fats": "Moderate healthy fats",
+            "suggested_foods": ["Lean protein, whole grains, dairy, healthy fats"]
+        },
+        "muscle_gain": {
+            "calories": "2500-3000 kcal/day",
+            "protein": "High protein (1.5-2g per kg body weight)",
+            "carbs": "Higher intake (brown rice, oats, quinoa)",
+            "fats": "Healthy fats (nuts, seeds, olive oil)",
+            "suggested_foods": ["Chicken, salmon, eggs, legumes, dairy, whole grains"]
+        }
+    }
+
+    return {
+        "BMI": bmi,
+        "Status": status,
+        "Recommended Diet": diet_plan.get(goal, "Invalid goal. Choose 'weight_loss', 'maintenance', or 'muscle_gain'")
+    }
+
+# Example Usage
+weight = 75  # kg
+height = 1.75  # meters
+goal = "muscle_gain"  # Options: "weight_loss", "maintenance", "muscle_gain"
+
+recommendation = diet_recommendation(weight, height, goal)
+print(recommendation)
